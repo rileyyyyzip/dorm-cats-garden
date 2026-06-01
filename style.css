@@ -420,22 +420,26 @@ body.dusk-theme .lamp-bulb, body.night-theme .lamp-bulb {
   transition: background var(--bg-duration) ease;
 }
 
-/* Hover hint text */
+/* Instruction hint text below canvas */
 .interaction-hint {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
+  text-align: center;
+  color: #495057;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 4px 0 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.interaction-hint p {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   padding: 8px 18px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  z-index: 6;
-  pointer-events: none;
-  opacity: 0.85;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  animation: pulse 2.5s infinite;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
 }
 
 /* Quick Action Panel CSS */
