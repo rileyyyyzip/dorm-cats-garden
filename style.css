@@ -1,0 +1,706 @@
+/* Global Styles & Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Fredoka', 'Quicksand', system-ui, -apple-system, sans-serif;
+  background: #fdf6e2;
+  color: #2b2d42;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  overflow-x: hidden;
+  transition: background-color 1s ease;
+}
+
+/* Theme Configurations */
+:root {
+  --bg-duration: 1.5s;
+}
+
+body.dawn-theme {
+  background: #fff3e3;
+  --sky-grad: linear-gradient(to bottom, #ff9e7d, #ffcba4, #fff0db);
+  --light-overlay: rgba(255, 180, 150, 0.15);
+  --lamp-glow-opacity: 0.1;
+  --window-glow: rgba(255, 235, 180, 0.5);
+  --stars-opacity: 0;
+  --dorm-color: #5d4a44;
+  --grass-tint: hue-rotate(15deg) brightness(1.05);
+}
+
+body.day-theme {
+  background: #eef1f6;
+  --sky-grad: linear-gradient(to bottom, #4ea8de, #90e0ef, #e3f2fd);
+  --light-overlay: rgba(255, 255, 255, 0);
+  --lamp-glow-opacity: 0;
+  --window-glow: rgba(255, 255, 255, 0.2);
+  --stars-opacity: 0;
+  --dorm-color: #7b6257;
+  --grass-tint: none;
+}
+
+body.dusk-theme {
+  background: #f4ece8;
+  --sky-grad: linear-gradient(to bottom, #3a0ca3, #7209b7, #f72585, #ffd166);
+  --light-overlay: rgba(180, 70, 120, 0.2);
+  --lamp-glow-opacity: 0.7;
+  --window-glow: rgba(255, 200, 80, 0.8);
+  --stars-opacity: 0.1;
+  --dorm-color: #433332;
+  --grass-tint: hue-rotate(-20deg) brightness(0.85) saturate(1.1);
+}
+
+body.night-theme {
+  background: #eae8f0;
+  --sky-grad: linear-gradient(to bottom, #050515, #0d1b2a, #1b263b);
+  --light-overlay: rgba(15, 15, 60, 0.45);
+  --lamp-glow-opacity: 1;
+  --window-glow: rgba(255, 220, 100, 1);
+  --stars-opacity: 0.8;
+  --dorm-color: #2b1f1e;
+  --grass-tint: hue-rotate(-45deg) brightness(0.6) saturate(0.8);
+}
+
+/* App Container Layout */
+.app-container {
+  width: 100%;
+  max-width: 950px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header UI */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  padding: 15px 25px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  transition: background 1s ease, border-color 1s ease;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-emoji {
+  font-size: 2rem;
+  animation: bounce 3s infinite ease-in-out;
+}
+
+.header-logo h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1e2022;
+  background: linear-gradient(135deg, #1e2022 30%, #ef233c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stats-container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.stat-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  min-width: 140px;
+  position: relative;
+  overflow: hidden;
+}
+
+#stat-level {
+  min-width: 180px;
+  padding-bottom: 12px;
+}
+
+.badge-icon {
+  font-size: 1.3rem;
+}
+
+.badge-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.badge-label {
+  font-size: 0.75rem;
+  color: #8d99ae;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.badge-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2b2d42;
+}
+
+/* XP Bar styled nicely */
+.xp-bar-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #4caf50, #81c784);
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Game Viewport Wrapper */
+.game-viewport-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#game-viewport {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  background: var(--sky-grad);
+  transition: background var(--bg-duration) ease;
+}
+
+/* Sky Background Overlay & Stars */
+.sky-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stars-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 80px 120px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 150px 50px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 240px 90px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 310px 180px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2.5px 2.5px at 420px 40px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 530px 150px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 620px 80px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 730px 120px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 850px 60px, #ffffff, rgba(0,0,0,0));
+  opacity: var(--stars-opacity);
+  transition: opacity var(--bg-duration) ease;
+}
+
+/* Drifting Clouds */
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 100px;
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+}
+
+.cloud-1 {
+  width: 120px;
+  height: 40px;
+  top: 15%;
+  left: -150px;
+  animation: drift 55s infinite linear;
+}
+.cloud-1::before { width: 50px; height: 50px; top: -20px; left: 15px; }
+.cloud-1::after { width: 60px; height: 60px; top: -30px; left: 45px; }
+
+.cloud-2 {
+  width: 180px;
+  height: 50px;
+  top: 8%;
+  left: -200px;
+  animation: drift 75s infinite linear 10s;
+}
+.cloud-2::before { width: 70px; height: 70px; top: -30px; left: 25px; }
+.cloud-2::after { width: 80px; height: 80px; top: -40px; left: 65px; }
+
+.cloud-3 {
+  width: 100px;
+  height: 35px;
+  top: 25%;
+  left: -120px;
+  animation: drift 40s infinite linear 25s;
+}
+.cloud-3::before { width: 40px; height: 40px; top: -15px; left: 12px; }
+.cloud-3::after { width: 45px; height: 45px; top: -20px; left: 35px; }
+
+@keyframes drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(1200px); }
+}
+
+/* Silhouette Dormitory Background */
+.dorm-silhouette {
+  position: absolute;
+  bottom: 120px; /* Grass starts around here */
+  left: 10%;
+  right: 10%;
+  height: 180px;
+  background: var(--dorm-color);
+  border-radius: 12px 12px 0 0;
+  transition: background var(--bg-duration) ease;
+  z-index: 2;
+  box-shadow: inset 0 20px 40px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 15px 30px;
+}
+
+.dorm-brick-texture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.08;
+  background-image: 
+    linear-gradient(90deg, #fff 2px, transparent 2px),
+    linear-gradient(#fff 2px, transparent 2px);
+  background-size: 20px 10px;
+  border-radius: 12px 12px 0 0;
+  pointer-events: none;
+}
+
+.dorm-windows {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 25px;
+  width: 100%;
+}
+
+.window {
+  height: 32px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 4px 4px 0 0;
+  transition: background var(--bg-duration) ease, box-shadow var(--bg-duration) ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.window.lit-window {
+  background: var(--window-glow);
+  box-shadow: 0 0 10px var(--window-glow);
+}
+
+/* Streetlamps */
+.streetlamp {
+  position: absolute;
+  bottom: 80px;
+  z-index: 3;
+  width: 40px;
+  height: 200px;
+  pointer-events: none;
+}
+
+.lamp-left { left: 8%; }
+.lamp-right { right: 8%; }
+
+.lamp-post {
+  position: absolute;
+  bottom: 0;
+  left: 18px;
+  width: 4px;
+  height: 100%;
+  background: #333;
+  border-radius: 2px;
+}
+
+.lamp-head {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  background: #444;
+  border-radius: 50% 50% 0 0;
+}
+
+.lamp-bulb {
+  position: absolute;
+  bottom: -6px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+  background: #e2e2e2;
+  border-radius: 50%;
+  transition: background var(--bg-duration) ease, box-shadow var(--bg-duration) ease;
+}
+
+body.dusk-theme .lamp-bulb, body.night-theme .lamp-bulb {
+  background: #fff7ae;
+  box-shadow: 0 0 8px #ffeb3b;
+}
+
+.lamp-glow {
+  position: absolute;
+  top: 5px;
+  left: -50px;
+  width: 120px;
+  height: 220px;
+  background: radial-gradient(circle at top center, rgba(255, 235, 59, 0.4) 0%, rgba(255, 235, 59, 0.08) 50%, rgba(255, 235, 59, 0) 70%);
+  clip-path: polygon(45% 0%, 55% 0%, 100% 100%, 0% 100%);
+  opacity: var(--lamp-glow-opacity);
+  transition: opacity var(--bg-duration) ease;
+  pointer-events: none;
+}
+
+/* Canvas Playground */
+#garden-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  cursor: pointer;
+  transition: filter var(--bg-duration) ease;
+  filter: var(--grass-tint);
+}
+
+/* Time Filter Overlay (makes daytime bright, night deep/dark) */
+.time-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--light-overlay);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 5;
+  transition: background var(--bg-duration) ease;
+}
+
+/* Hover hint text */
+.interaction-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0.85;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  animation: pulse 2.5s infinite;
+}
+
+/* Quick Action Panel CSS */
+.action-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 12px 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+}
+
+.action-selector {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  cursor: pointer;
+  background: #fff;
+  color: #555;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.action-btn.active {
+  background: #ffeb3b;
+  color: #2b2d42;
+  border-color: #fdd835;
+  box-shadow: 0 6px 16px rgba(253, 216, 53, 0.3);
+}
+
+.btn-emoji {
+  font-size: 1.15rem;
+}
+
+.control-toggles {
+  display: flex;
+  gap: 10px;
+}
+
+.utility-btn {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #f1f3f5;
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 8px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #495057;
+  transition: all 0.2s ease;
+}
+
+.utility-btn:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}
+
+/* Cat Album (Index) Grid */
+.cat-album-section {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 25px;
+  border-radius: 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.cat-album-section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #2b2d42;
+  font-weight: 700;
+  text-align: center;
+}
+
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.album-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.02);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.album-card.locked {
+  filter: grayscale(0.9) opacity(0.7);
+}
+
+.album-card:not(.locked):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.05);
+}
+
+.album-avatar {
+  font-size: 3rem;
+  width: 75px;
+  height: 75px;
+  background: #fdf6e2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px auto;
+  border: 2px solid #fff3e3;
+  transition: transform 0.4s ease;
+}
+
+.album-card:not(.locked) .album-avatar {
+  animation: waddle-avatar 4s infinite ease-in-out;
+}
+
+.album-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  color: #2b2d42;
+}
+
+.cat-status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #8d99ae;
+}
+
+.album-card:not(.locked) .status-text {
+  color: #4caf50;
+}
+
+.cat-bio {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #6c757d;
+}
+
+/* Artist Statement & Footer */
+.game-footer {
+  margin-top: 10px;
+}
+
+.artist-statement-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 30px;
+  border-radius: 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  line-height: 1.6;
+}
+
+.artist-statement-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  color: #1e2022;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.08);
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+.artist-statement-card p {
+  font-size: 0.95rem;
+  color: #495057;
+  margin-bottom: 15px;
+  text-align: justify;
+}
+
+.artist-statement-card p strong {
+  color: #2b2d42;
+}
+
+.footer-signature {
+  margin-top: 25px;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #8d99ae;
+  text-align: right;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  padding-top: 12px;
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.05); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.75; transform: translate(-50%, 0) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -2px) scale(1.02); }
+}
+
+@keyframes waddle-avatar {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+/* Responsive Scaling */
+@media(max-width: 600px) {
+  .game-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    text-align: center;
+  }
+  .stats-container {
+    justify-content: center;
+  }
+  #game-viewport {
+    height: 380px;
+  }
+  .action-panel {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .action-selector {
+    width: 100%;
+  }
+  .action-btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .control-toggles {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .dorm-silhouette {
+    bottom: 100px;
+    height: 140px;
+    padding: 10px;
+  }
+  .dorm-windows {
+    gap: 12px;
+  }
+  .streetlamp {
+    height: 160px;
+  }
+}

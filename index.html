@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dorm Cats Garden - Cozy Campus Idle Game</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="Welcome to Dorm Cats Garden! A cozy idle game inspired by university dorm stray cats. Plant flowers, leave snacks, and attract cute cartoon cats wearing tiny head sprouts.">
+  <meta name="keywords" content="dorm cats garden, idle game, cute cats, cat game, cozy games, campus cats">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dawn-theme">
+  <div class="app-container">
+    <!-- Top Bar UI -->
+    <header class="game-header">
+      <div class="header-logo">
+        <span class="logo-emoji">🐱</span>
+        <h1>Dorm Cats Garden</h1>
+      </div>
+      <div class="stats-container">
+        <div class="stat-badge" id="stat-level" title="Your garden experience and level">
+          <span class="badge-icon">🌸</span>
+          <div class="badge-text">
+            <span class="badge-label">Garden Level</span>
+            <span class="badge-value" id="garden-level-val">1</span>
+          </div>
+          <div class="xp-bar-container">
+            <div class="xp-bar-fill" id="xp-bar-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+        <div class="stat-badge" id="stat-cats" title="Unique cats that have visited you">
+          <span class="badge-icon">💖</span>
+          <div class="badge-text">
+            <span class="badge-label">Cats Met</span>
+            <span class="badge-value" id="cats-met-val">0 / 2</span>
+          </div>
+        </div>
+        <div class="stat-badge" id="stat-time" title="Current in-game time of day">
+          <span class="badge-icon" id="time-emoji">🌅</span>
+          <div class="badge-text">
+            <span class="badge-label">Time of Day</span>
+            <span class="badge-value" id="time-val">Dawn</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Viewport -->
+    <main class="game-viewport-wrapper">
+      <div id="game-viewport">
+        <!-- Sky & Stars Background -->
+        <div class="sky-background">
+          <div class="stars-overlay"></div>
+          <!-- Drifting Clouds -->
+          <div class="cloud cloud-1"></div>
+          <div class="cloud cloud-2"></div>
+          <div class="cloud cloud-3"></div>
+        </div>
+
+        <!-- Silhouette Dormitory Wall Background -->
+        <div class="dorm-silhouette">
+          <div class="dorm-brick-texture"></div>
+          <div class="dorm-windows">
+            <div class="window lit-window"></div>
+            <div class="window"></div>
+            <div class="window lit-window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window lit-window"></div>
+          </div>
+        </div>
+
+        <!-- Stylized Campus Streetlamps (HTML/CSS for premium glow) -->
+        <div class="streetlamp lamp-left">
+          <div class="lamp-post"></div>
+          <div class="lamp-head">
+            <div class="lamp-bulb"></div>
+            <div class="lamp-glow"></div>
+          </div>
+        </div>
+        <div class="streetlamp lamp-right">
+          <div class="lamp-post"></div>
+          <div class="lamp-head">
+            <div class="lamp-bulb"></div>
+            <div class="lamp-glow"></div>
+          </div>
+        </div>
+
+        <!-- The Canvas Playground (Grass, Cats, Flowers, Food) -->
+        <canvas id="garden-canvas"></canvas>
+
+        <!-- Dynamic Lighting Filter Layer -->
+        <div class="time-overlay"></div>
+
+        <!-- Interactive Hotspot Tips -->
+        <div class="interaction-hint">
+          <p>Click on the grass to plant flowers or place snacks!</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Controls -->
+      <section class="action-panel">
+        <div class="action-selector">
+          <button id="btn-flower" class="action-btn active" data-action="flower">
+            <span class="btn-emoji">🌸</span> Plant Sprout (Free)
+          </button>
+          <button id="btn-snack" class="action-btn" data-action="snack">
+            <span class="btn-emoji">🐟</span> Place Snack (Free)
+          </button>
+        </div>
+        <div class="control-toggles">
+          <button id="btn-time-cycle" class="utility-btn" title="Toggle Auto Day/Night Cycle">
+            ⏱️ Auto-Time: <span id="time-cycle-status">ON</span>
+          </button>
+          <button id="btn-time-advance" class="utility-btn" title="Advance Time of Day">
+            ⏩ Skip Time
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Album / Book of met cats (Collapsible / expandable for extra wow factor) -->
+    <section class="cat-album-section">
+      <h2>Campus Cat Index</h2>
+      <div class="album-grid">
+        <div class="album-card locked" id="album-tuxedo">
+          <div class="album-avatar" id="avatar-tuxedo">🐱</div>
+          <h3>Tuxedo Cow Cat</h3>
+          <p class="cat-status">Status: <span class="status-text">Not Met</span></p>
+          <p class="cat-bio">A sleek black-and-white explorer. Usually patrols the dorm dumpster and gardens at dawn.
+          </p>
+        </div>
+        <div class="album-card locked" id="album-ginger">
+          <div class="album-avatar" id="avatar-ginger">🐱</div>
+          <h3>Ginger Tabby</h3>
+          <p class="cat-status">Status: <span class="status-text">Not Met</span></p>
+          <p class="cat-bio">A friendly, chubby orange tabby. Loves sleeping on streetwalk tiles warmed by streetlamps.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
